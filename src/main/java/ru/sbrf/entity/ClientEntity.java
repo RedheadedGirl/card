@@ -1,11 +1,13 @@
 package ru.sbrf.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "clients")
 public class ClientEntity {

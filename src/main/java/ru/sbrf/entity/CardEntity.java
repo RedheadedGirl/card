@@ -1,6 +1,7 @@
 package ru.sbrf.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "cards")
 public class CardEntity {
