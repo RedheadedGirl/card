@@ -1,0 +1,1 @@
+ALTER TABLE cards ADD status VARCHAR(15) NOT NULL;

@@ -12,12 +12,12 @@ import ru.sbrf.exceptions.ServiceException;
 @RestControllerAdvice
 public class ExceptionEndpoint extends ResponseEntityExceptionHandler {
 
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-                                                             HttpStatusCode status, WebRequest request) {
-        return ResponseEntity.status(status)
-                .body(new ErrorInfo(HttpStatus.resolve(status.value()).name(), ex.getMessage()));
-    }
+//    @Override
+//    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
+//                                                             HttpStatusCode status, WebRequest request) {
+//        return ResponseEntity.status(status)
+//                .body(new ErrorInfo(HttpStatus.resolve(status.value()).name(), ex.getMessage()));
+//    }
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ErrorInfo> onServiceException(ServiceException ex) {

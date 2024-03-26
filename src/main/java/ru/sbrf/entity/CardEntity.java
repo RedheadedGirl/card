@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import ru.sbrf.enums.CardStatus;
 
 import java.time.LocalDateTime;
 
@@ -31,4 +32,8 @@ public class CardEntity {
     @JoinColumn(name = "id_client", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ClientEntity clientEntity;
+
+    @Enumerated
+    @Column(name = "status")
+    private CardStatus status;
 }

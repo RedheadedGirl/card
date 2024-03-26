@@ -7,4 +7,5 @@ import ru.sbrf.entity.CardEntity;
 @Repository
 public interface CardRepository extends JpaRepository<CardEntity, Integer> {
 
+    boolean existsByCardNumber(String cardNumber);
 }
