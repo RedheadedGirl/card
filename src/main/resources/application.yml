@@ -5,3 +5,24 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/card_db?useUnicode=true&characterEncoding=UTF-8
     username: postgres
     password: postgres
+  mail:
+    host: smtp.mail.ru
+    port: 465
+    username: zevesgod@mail.ru
+    password:
+    protocol: smtp
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          ssl:
+            enable: true
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+
+cron:
+  notify: 0 0 9 * * ?
+

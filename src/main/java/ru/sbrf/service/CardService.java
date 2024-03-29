@@ -49,4 +49,8 @@ public class CardService {
         return cardMapper.toCardOutputList(all);
     }
 
+    public List<CardEntity> findAllWhereDateExpiredToday() {
+        return cardRepository.findAllWhereDateExpiredToday();
+    }
+
 }
