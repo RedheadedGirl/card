@@ -2,10 +2,6 @@ package ru.sbrf.endpoint;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.sbrf.dto.ClientInput;
 import ru.sbrf.dto.ClientOutput;
@@ -28,16 +24,6 @@ public class ClientEndpoint {
     @GetMapping
     public List<ClientOutput> getAll() {
         return clientService.getAll();
-    }
-
-    /**
-     * Получение списка клиентов
-     * @return Список клиентов
-     */
-    @GetMapping(value = "/filter", params = {"page", "size"})
-    public Page<ClientOutput> getAllPageable(
-            @SortDefault(value = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        return clientService.getAllPageable(pageable);
     }
 
     /**

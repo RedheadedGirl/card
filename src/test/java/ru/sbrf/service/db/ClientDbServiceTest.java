@@ -1,4 +1,4 @@
-package ru.sbrf.service;
+package ru.sbrf.service.db;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import ru.sbrf.dto.ClientInput;
 import ru.sbrf.dto.ClientOutput;
 import ru.sbrf.entity.ClientEntity;
@@ -25,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ClientServiceTest {
+class ClientDbServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
@@ -33,11 +30,11 @@ class ClientServiceTest {
     @Mock
     private ClientMapper clientMapper;
 
-    private ClientService clientService;
+    private ClientDbService clientService;
 
     @BeforeEach
     void setUp() {
-        clientService = new ClientService(clientRepository, clientMapper);
+        clientService = new ClientDbService(clientRepository, clientMapper);
     }
 
     @Test
@@ -52,22 +49,6 @@ class ClientServiceTest {
 
         assertEquals(1, all.size());
         assertEquals(clientOutputs.getFirst(), all.getFirst());
-    }
-
-    @Test
-    void givenPageable_whenGetAllPageable_thenDo() {
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        List<ClientEntity> clientEntities = List.of(new ClientEntity());
-        ClientOutput clientOutput = new ClientOutput((short) 1, "fio", LocalDate.now(),
-                "email", "inn");
-        PageImpl<ClientEntity> entityPage = new PageImpl<>(clientEntities);
-        when(clientRepository.findAll(pageRequest)).thenReturn(entityPage);
-        when(clientMapper.toClientOutput(clientEntities.getFirst())).thenReturn(clientOutput);
-
-        Page<ClientOutput> allPageable = clientService.getAllPageable(pageRequest);
-
-        assertEquals(1, allPageable.getContent().size());
-        assertEquals(clientOutput, allPageable.getContent().getFirst());
     }
 
     @Nested

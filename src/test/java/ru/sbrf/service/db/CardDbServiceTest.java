@@ -1,4 +1,4 @@
-package ru.sbrf.service;
+package ru.sbrf.service.db;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -14,6 +14,7 @@ import ru.sbrf.exceptions.NotFoundException;
 import ru.sbrf.mapper.CardMapper;
 import ru.sbrf.repository.CardRepository;
 import ru.sbrf.repository.ClientRepository;
+import ru.sbrf.service.CardGenerator;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CardServiceTest {
+class CardDbServiceTest {
 
     @Mock
     private CardGenerator cardGenerator;
@@ -38,11 +39,11 @@ class CardServiceTest {
     @Mock
     private CardMapper cardMapper;
 
-    private CardService cardService;
+    private CardDbService cardDbService;
 
     @BeforeEach
     void setUp() {
-        cardService = new CardService(cardGenerator, clientRepository, cardRepository, cardMapper);
+        cardDbService = new CardDbService(cardGenerator, clientRepository, cardRepository, cardMapper);
     }
 
     @Nested
@@ -55,7 +56,7 @@ class CardServiceTest {
         void givenIdClient_whenFind_thenThrowNotFound() {
             when(clientRepository.findById(idClient)).thenReturn(Optional.empty());
 
-            assertThrows(NotFoundException.class, () -> cardService.createCard(idClient));
+            assertThrows(NotFoundException.class, () -> cardDbService.createCard(idClient));
         }
 
         @Test
@@ -65,7 +66,7 @@ class CardServiceTest {
 
             when(clientRepository.findById(idClient)).thenReturn(Optional.of(clientEntity));
             when(cardGenerator.generateNewCardNumber()).thenReturn(cardNumber);
-            String card = cardService.createCard(idClient);
+            String card = cardDbService.createCard(idClient);
 
             ArgumentCaptor<CardEntity> captor = ArgumentCaptor.forClass(CardEntity.class);
             verify(cardRepository).save(captor.capture());
@@ -86,14 +87,14 @@ class CardServiceTest {
         void givenCardId_whenCloseCard_thenThrowNotFound() {
             when(cardRepository.findById(idCard)).thenReturn(Optional.empty());
 
-            assertThrows(NotFoundException.class, () -> cardService.closeCard(idCard));
+            assertThrows(NotFoundException.class, () -> cardDbService.closeCard(idCard));
         }
 
         @Test
         void givenCardId_whenCloseCard_thenDo() {
             when(cardRepository.findById(idCard)).thenReturn(Optional.of(new CardEntity()));
 
-            cardService.closeCard(idCard);
+            cardDbService.closeCard(idCard);
 
             ArgumentCaptor<CardEntity> captor = ArgumentCaptor.forClass(CardEntity.class);
             verify(cardRepository).save(captor.capture());
@@ -115,7 +116,7 @@ class CardServiceTest {
 
             when(cardRepository.findAll()).thenReturn(cards);
 
-            cardService.getAll();
+            cardDbService.getAll();
             verify(cardMapper).toCardOutputList(cards);
         }
     }
