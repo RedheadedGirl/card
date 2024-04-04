@@ -29,7 +29,7 @@ public class ClientEndpoint {
     /**
      * Создает клиента
      * @param input данные для создания
-     * @return id созданного клиента в случае успеха
+     * @return Optional.of(id) если клиент с таким инн был создан ранее, empty в случае созданного с нуля
      */
     @PostMapping
     public Optional<Short> createClient(@Valid @RequestBody ClientInput input) {
