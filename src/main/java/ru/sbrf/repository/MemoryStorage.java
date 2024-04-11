@@ -3,6 +3,7 @@ package ru.sbrf.repository;
 import org.springframework.stereotype.Repository;
 import ru.sbrf.entity.CardEntity;
 import ru.sbrf.entity.ClientEntity;
+import ru.sbrf.enums.CardStatus;
 import ru.sbrf.exceptions.NotFoundException;
 
 import java.time.LocalDate;
@@ -77,7 +78,8 @@ public class MemoryStorage {
     public List<CardEntity> findCardsByDateExpired(LocalDate localDate) {
         return map.values().stream()
                 .flatMap(Collection::stream)
-                .filter(card -> localDate.equals(card.getDateExpired().toLocalDate()))
+                .filter(card -> localDate.equals(card.getDateExpired().toLocalDate())
+                        && card.getStatus() == CardStatus.ACTIVE)
                 .collect(Collectors.toList());
     }
 

@@ -14,6 +14,6 @@ public interface CardRepository extends JpaRepository<CardEntity, Integer> {
 
     // пусть у нас будет логика, по которой мы раз в день отправляем людям нотификации что их карты expired
     // но крон для демонстрации стоит каждую минуту
-    @Query(value = "SELECT * FROM cards WHERE DATE(date_expired) = CURRENT_DATE", nativeQuery = true)
+    @Query(value = "SELECT * FROM cards WHERE DATE(date_expired) = CURRENT_DATE AND status = 'ACTIVE'", nativeQuery = true)
     List<CardEntity> findAllWhereDateExpiredToday();
 }
