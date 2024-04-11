@@ -33,7 +33,7 @@ public class CardEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ClientEntity clientEntity;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private CardStatus status;
 }
